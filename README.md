@@ -1,5 +1,5 @@
-GraphDemo
-=========
+GraphDisplay
+============
 
 This package creates SVG images of graphs.  
 
@@ -29,4 +29,4 @@ $ elm make GraphDemo.elm
 in the root of this folder.
 
 
-[logo]: http://noteimages.s3.amazonaws.com/jim_images/graphdemo.png "Logo Title Text 2"
+![](graphdemo.png)
