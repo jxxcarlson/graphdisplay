@@ -28,4 +28,5 @@ The `100` is a scale factor.  For a demo, run
 $ elm make GraphDemo.elm
 ```
 
-in the root of this folder.
+in the root of this folder.  For examples which use this package,
+consult the examples folder in the source files on GitHub.

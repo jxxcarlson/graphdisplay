@@ -1,23 +1,50 @@
 module DisplayGraph exposing (Graph, Vertex, graphDisplay)
 
+{-| DisplayGraph provides tools for constructing graphs and
+rendering them into SVG.
+
+@docs Graph, Vertex, graphDisplay
+
+-}
+
 import Vector exposing (Vector)
 import List.Extra
 import Shape exposing (..)
 import ColorRecord exposing (..)
-import Line exposing (..)
+import LineSegment exposing (..)
 import Svg exposing (Svg)
 
 
+{-| A graph is s record with two fields - list of vertices
+and a list of edges.
+-}
+type alias Graph =
+    { vertices : List Vertex, edges : List Edge }
+
+
+{-| A vertex is s record with two fields, an integer id and a string label.
+-}
 type alias Vertex =
     { id : Int, label : String }
 
 
+{-| A an edge is a tupe of integers, where the two elements
+are the ids of vertices.
+-}
 type alias Edge =
     ( Int, Int )
 
 
-type alias Graph =
-    { vertices : List Vertex, edges : List Edge }
+vertexColor =
+    ColorRecord 0 50 255 0.8
+
+
+lineSegmentColor =
+    ColorRecord 0 0 0 1.0
+
+
+boundingBoxColor =
+    ColorRecord 0 0 255 0.15
 
 
 getPoints : Graph -> List Vector
@@ -90,7 +117,7 @@ renderPoints centers =
         centers |> List.map (\center -> makeCircle size center)
 
 
-renderSegments : List Vector.DirectedSegment -> List Line
+renderSegments : List Vector.DirectedSegment -> List LineSegment
 renderSegments directedSegments =
     directedSegments |> List.map (\edge -> makeLine edge)
 
@@ -99,16 +126,20 @@ makeCircle : Float -> Vector -> Shape
 makeCircle size center =
     let
         shapeData =
-            ShapeData center (Vector size size) ColorRecord.lightBlueColor ColorRecord.lightBlueColor
+            ShapeData center (Vector size size) vertexColor vertexColor
     in
         Ellipse shapeData
 
 
-makeLine : Vector.DirectedSegment -> Line
+makeLine : Vector.DirectedSegment -> LineSegment
 makeLine segment =
-    Line segment.a segment.b 2.5 ColorRecord.blackColor ColorRecord.blackColor
+    LineSegment segment.a segment.b 2.5 lineSegmentColor lineSegmentColor
 
 
+{-| graphDisplay takes a number and a graph as arguments
+and returns an SVG representation of the graph. The number is
+a scale factor. If the scale is 1, the graph is centered in a 2x2 square.
+-}
 graphDisplay : Float -> Graph -> List (Svg msg)
 graphDisplay scale graph =
     let
@@ -139,9 +170,9 @@ graphDisplay scale graph =
         renderedSegments =
             segments
                 |> renderSegments
-                |> List.map (Line.scaleBy (k * scale))
-                |> List.map (Line.moveBy (Vector (kk * scale) scale))
-                |> List.map Line.draw
+                |> List.map (LineSegment.scaleBy (k * scale))
+                |> List.map (LineSegment.moveBy (Vector (kk * scale) scale))
+                |> List.map LineSegment.draw
     in
         renderedSegments ++ renderedPoints ++ [ boundingBox scale ]
 
@@ -149,8 +180,8 @@ graphDisplay scale graph =
 boundingBoxData =
     { center = (Vector 0 0)
     , dimensions = (Vector 2 2)
-    , strokeColor = ColorRecord.blackColor
-    , fillColor = ColorRecord.transparentBlueColor
+    , strokeColor = lineSegmentColor
+    , fillColor = boundingBoxColor
     }
 
 
