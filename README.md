@@ -1,3 +1,5 @@
+![](graphdemo.png)
+
 GraphDisplay
 ============
 
@@ -27,6 +29,3 @@ $ elm make GraphDemo.elm
 ```
 
 in the root of this folder.
-
-
-![](graphdemo.png)
