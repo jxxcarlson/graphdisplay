@@ -3,7 +3,8 @@
 GraphDisplay
 ============
 
-This package creates SVG images of graphs.  
+This package creates SVG images of graphs.  It makes use of the
+package `jxxcarlson/geometry`.
 
 ```
 import DisplayGraph
