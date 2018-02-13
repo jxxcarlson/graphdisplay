@@ -1,4 +1,4 @@
-![](graphdemo.png)
+![](graphdemo.png | width = 200)
 
 GraphDisplay
 ============
