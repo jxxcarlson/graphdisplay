@@ -1,4 +1,4 @@
-module DisplayGraph exposing (..)
+module DisplayGraph exposing (Graph, Vertex, graphDisplay)
 
 import Vector exposing (Vector)
 import List.Extra
