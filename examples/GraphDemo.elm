@@ -1,12 +1,9 @@
 module GraphDemo exposing (..)
 
-import Html exposing (Html, div, text, p)
+import DisplayGraph exposing (Graph, Vertex, graphDisplay)
+import Html exposing (Html, div, p, text)
 import Html.Attributes exposing (..)
 import Svg exposing (svg)
-import Svg.Attributes as SA
-import DisplayGraph exposing (Graph, Vertex, graphDisplay)
-import Vector exposing (Vector)
-import Affine
 
 
 main : Html msg
@@ -24,18 +21,22 @@ display =
         ]
 
 
+testGraph : Graph
 testGraph =
     Graph vertices edges
 
 
+vertices : List Vertex
 vertices =
     [ Vertex 1 "A", Vertex 2 "B", Vertex 3 "C", Vertex 4 "D", Vertex 5 "E" ]
 
 
+edges : List ( number, number1 )
 edges =
     [ ( 1, 2 ), ( 1, 3 ), ( 2, 3 ), ( 2, 4 ), ( 2, 5 ), ( 3, 4 ), ( 4, 5 ) ]
 
 
+mainStyle : Html.Attribute msg
 mainStyle =
     style
         [ ( "padding", "40px" )
@@ -45,6 +46,7 @@ mainStyle =
         ]
 
 
+legendStyle : Html.Attribute msg
 legendStyle =
     style
         [ ( "margin-left", "75px" )
